@@ -42,3 +42,5 @@ const BigfootReport =
       }
     )
   );
+
+export default BigfootReport;
