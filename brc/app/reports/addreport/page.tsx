@@ -56,7 +56,7 @@ export default function CreateReportPage() {
         <h1 className="text-4xl mb-2 text-center">Submit A Bigfoot Report</h1>
         <p className="text-xl text-center py-4 font-semibold">
           Do not leave an input field empty; if information is unknown, type
-          "Unknown".
+          Unknown.
         </p>
         <ReportForm onSubmit={handleSubmit} />
       </div>

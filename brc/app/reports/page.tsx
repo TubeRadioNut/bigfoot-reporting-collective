@@ -98,7 +98,7 @@ export default async function ReportsPage({
                 <p className="text-xl py-4">{report.title}</p>
                 <p className="text-lg py-2">Location: {report.location}</p>
                 <Link
-                  className="border-solid border-2 border-white rounded-md p-2 hover:border-blue-700 hover:text-blue-700"
+                  className="border-solid border-2 border-white rounded-md p-2 bg-blue-500 hover:border-blue-700 hover:text-blue-700"
                   href={`/reports/${report._id}`}
                 >
                   More Information

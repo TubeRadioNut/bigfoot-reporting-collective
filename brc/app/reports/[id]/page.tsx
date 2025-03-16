@@ -16,22 +16,15 @@ export default function DetailsPage({
   params: Promise<PageParams>;
 }) {
   const { data: session, status } = useSession();
-
-  // If session is still loading, or user is not authenticated, redirect to the sign-in page
-  if (status === "loading") return <p>Loading...</p>;
-  if (!session) {
-    redirect("/api/auth/signin");
-    return null; // Prevent further rendering if not authenticated
-  }
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [report, setReport] = useState<BigfootReport | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [editMode, setEditMode] = useState(false);
+  const router = useRouter();
 
   //detructure ID out of params with use
   const { id } = use(params);
   //setup hooks and state variables
-  const [isDeleting, setIsDeleting] = useState(false);
-  const router = useRouter();
-  const [report, setReport] = useState<BigfootReport | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [editMode, setEditMode] = useState(false);
 
   //Memorize the loadReport function using useCallback
   const loadReport = useCallback(async () => {
@@ -55,6 +48,13 @@ export default function DetailsPage({
     loadReport();
   }, [loadReport]);
   console.log("Report: ", report);
+
+  // If session is still loading, or user is not authenticated, redirect to the sign-in page
+  if (status === "loading") return <p>Loading...</p>;
+  if (!session) {
+    redirect("/api/auth/signin");
+    return null; // Prevent further rendering if not authenticated
+  }
 
   const handleDelete = async (id: string) => {
     setIsDeleting(true);
