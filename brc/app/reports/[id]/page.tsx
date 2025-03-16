@@ -132,15 +132,15 @@ export default function DetailsPage({
             Submission Date: {new Date(report.createdAt).toDateString()}
           </p>
         </div>
-        <button
-          onClick={() => handleDelete(report._id)}
-          disabled={isDeleting}
-          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 disabled:bg-red-300"
-        >
-          {isDeleting ? "Deleting..." : "Delete Report"}
-        </button>
+        <div className="grid lg:grid-cols-2 lg:gap-8 max-w-4xl mx-auto p-4">
+          <button
+            onClick={() => handleDelete(report._id)}
+            disabled={isDeleting}
+            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 disabled:bg-red-300"
+          >
+            {isDeleting ? "Deleting..." : "Delete Report"}
+          </button>
 
-        <div className="my-8">
           {/* Edit button */}
           <button
             onClick={() => setEditMode(true)}
