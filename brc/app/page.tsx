@@ -1,101 +1,94 @@
-import Image from "next/image";
+import { BigfootReport } from "./types/bigfootReport";
+import Link from "next/link";
+import { GET } from "./api/reports/route";
 
-export default function Home() {
+export default async function Home() {
+  let bigfootReports: BigfootReport[] = [];
+
+  try {
+    //use the GET function to get data
+    const response = await GET();
+
+    //Check if the response is valid
+    if (!response.ok) {
+      throw new Error("Failed to fetch reports");
+    }
+
+    //parse the response data
+    const data = await response.json();
+    bigfootReports = data?.bigfootReports || [];
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
+
+  //Assign report the late one (newest first)
+  const report = bigfootReports[0];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className="container  mx-auto px-4 py-8 rounded-2xl bg-[url('/background.jpg')]">
+      <h1 className="text-center text-3xl font-bold mb-8 text-white">
+        Welcome To The Bigfoot Reporting Collective!
+      </h1>
+      <div className="text-white text-2xl">
+        <p className="mb-4">
+          This platform is dedicated to gathering and sharing Bigfoot sightings
+          and encounters from North America. Our mission is to provide a space
+          for enthusiasts, researchers, and curious individuals to share their
+          experiences without the need for personal information. Whether you
+          have had a firsthand sighting or heard an intriguing tale, we invite
+          you to report it here.
+        </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <p className="mb-4">
+          At the Bigfoot Reporting Collective, your privacy is our priority. We
+          understand the importance of anonymity and confidentiality, which is
+          why we do not collect any personal data from our users. Your reports
+          are only focused on the details of the encounter itself, allowing you
+          to share freely and without concern.
+        </p>
+
+        <p className="mb-4">
+          The main reason we do not collect personal information is to remove
+          any barriers that might prevent people from stepping forward with
+          their sightings. Too often, individuals hesitate to share their
+          experiences due to fears of being ridiculed, belittled, or labeled as
+          crazy or a nutjob. We believe that every account deserves to be heard,
+          regardless of how extraordinary or unusual it may seem.
+        </p>
+
+        <p className="mb-4">
+          By contributing to the Bigfoot Reporting Collective, you are becoming
+          part of a growing community of Bigfoot enthusiasts across North
+          America, all eager to uncover the truth behind these mysterious
+          creatures. Help us piece together the puzzle and connect sightings
+          from all corners of the continent in one accessible and trustworthy
+          platform.
+        </p>
+      </div>
+      {/* conditional render content */}
+      {bigfootReports.length === 0 ? (
+        <div className="text-center text-xl text-red-500">
+          <h1 className="text-4xl mb-2">No Reports Available At The Moment.</h1>
+          <Link className="hover:text-blue-700" href={"/reports/addreport"}>
+            <h2>Submit A Bigfoot Report</h2>
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      ) : (
+        <div className="my-8 p-8 bg-gray-200/10 backdrop-blur-sm text-gray-300 rounded-2xl shadow-custom">
+          <div className="w-full text-center mb-4">
+            <h1 className="text-4xl mb-2">Latest Reported Sighting</h1>
+            <h2 className="text-2xl font-bold">
+              Date of Sighting: {new Date(report.date).toLocaleDateString()}
+            </h2>
+            <p className="text-2xl font-semibold">{report.title}</p>
+            <p className="text-2xl font-semibold">{report.location}</p>
+            <p className="text-2xl font-semibold">{report.description}</p>
+            <p className="text-2xl font-semibold">
+              Submission Date: {new Date(report.createdAt).toDateString()}
+            </p>
+          </div>
+        </div>
+      )}
+    </main>
   );
 }

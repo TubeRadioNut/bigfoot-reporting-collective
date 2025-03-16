@@ -7,15 +7,23 @@ export default function NavBar() {
   console.log(session);
   return (
     <nav className="flex justify-between p-4">
-      <Link href="/">Home</Link>
-      <Link href="/reports">View All Reports</Link>
-      <Link href="/reports/addreport">Submit A Report</Link>
+      <Link className="hover:text-blue-700" href="/">
+        Home
+      </Link>
+      <Link className="hover:text-blue-700" href="/reports">
+        View All Reports
+      </Link>
+      <Link className="hover:text-blue-700" href="/reports/addreport">
+        Submit A Report
+      </Link>
       {session ? (
-        <button onClick={() => signOut()}>
+        <button className="hover:text-blue-700" onClick={() => signOut()}>
           Sign Out {session.user?.name}{" "}
         </button>
       ) : (
-        <button onClick={() => signIn()}>Sign In</button>
+        <button className="hover:text-blue-700" onClick={() => signIn()}>
+          Sign In
+        </button>
       )}
     </nav>
   );
