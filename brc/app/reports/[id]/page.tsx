@@ -146,7 +146,7 @@ export default function DetailsPage({
             onClick={() => setEditMode(true)}
             className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-700"
           >
-            Edit UFO Report
+            Edit Bigfoot Report
           </button>
         </div>
 
